@@ -1,0 +1,258 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{enumitem}
+\usepackage{listings}
+
+\usetikzlibrary{automata,positioning}
+
+%
+% Basic Document Settings
+%
+
+\lstset{%
+mathescape=true}
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{\hmwkClass\ : \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+\newenvironment{homeworkProblem}[1][-1]{
+    \ifnum#1>0
+        \setcounter{homeworkProblemCounter}{#1}
+    \fi
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% Homework Details
+%   - Title
+%   - Due date
+%   - Class
+%   - Section/Time
+%   - Instructor
+%   - Author
+%
+
+\newcommand{\hmwkTitle}{Homework\ \#1}
+\newcommand{\hmwkDueDate}{August 31, 2018}
+\newcommand{\hmwkClass}{COMS 572}
+\newcommand{\hmwkClassTime}{}
+\newcommand{\hmwkClassInstructor}{Professor Jin Tian}
+\newcommand{\hmwkAuthorName}{Le Zhang}
+
+%
+% Title Page
+%
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{\hmwkDueDate\ by 17:00pm}\\
+    \vspace{0.1in}\large{\textit{\hmwkClassInstructor\ \hmwkClassTime}}
+    \vspace{3in}
+}
+
+\author{\textbf{\hmwkAuthorName}}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Cartesian product
+\newcommand{\Cross}{\mathbin{\tikz [x=1.4ex,y=1.4ex,line width=.2ex] \draw (0,0) -- (1,1) (0,1) -- (1,0);}}%
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\begin{document}
+
+\maketitle
+
+%
+% Problem 1
+%
+\pagebreak
+\begin{homeworkProblem}
+\textit{(10 pts.)} Investigate the Turing Test and the Loebner Prize competition. 
+
+\begin{enumerate}[label=\alph*.]
+    \item What progress has been made over the years?
+    
+    The Turing test, developed by Alan Turing in 1950, is a test of a machine's ability to exhibit intelligent behavior equivalent to, or indistinguishable from, that of a human. During the test, a human judger sits down to chat with a robot and a human via computers. The judge is responsible to distinguish robot from human. \cite{wiki_Turing_test}
+    
+    The Loebner Prize is an annual competition in artificial intelligence that awards prizes to the computer programs considered by the judges to be the most human-like. The 2018 Loabner Prize competition is on-going right now and the final will be held in September. \cite{wiki_Loebner}
+    
+    Turing predicted that machines would eventually be able to pass the test; in fact, he estimated that by the year 2000, machines with around 100 MB of storage would be able to fool 30\% of human judges in a five-minute test, and that people would no longer consider the phrase``thinking machine'' contradictory. However, in practice, from 2009 - 2012, the Loebner Prize chatterbot contestants only managed to fool a judge once, and that was only due to the human contestant pretending to be a chatbot.
+    
+    As machine learning techniques are becoming more and more popular, chatbots are performing better in Loebner Prize competitions nowadays. In recent years, a chatbot named ``Mitsuku''\cite{mitsuku, wiki_Mitsuku} claimed the award multiple times and dominated the contest. According to a review article written by a former human judge in Loebner Prize competition 2017, Mitsuku may fool human many times during the conversation\cite{LP2017} which is a huge progress in this area. 
+    
+    
+    \item What is the chance do you think a computer would pass Turing Test in ten years?
+    
+    In my opinion, we are getting closer to pass the Turing test. As we may see today, there are a lot of outstanding machine learning robots being developed. With the help of neural networks, a powerful robot, AlphaGo Zero\cite{alphagozero} for example, is able to accomplish extremely difficult tasks without helps of human. However, for passing a turing test, there is still a long way to go. It is because that natrual language interpretation is one of the hardest tasks in AI field. Unlike self-driving or chess-playing, passing turing test requires the fully interpretation of human language and the ability of providing appropriate reply based on the context and language situations. The chatbots nowadays are far from perfection from this point of view. So I say even with the current evolving speed of AI robots, we still have no chance to pass the turing test within ten years. But it is definitely doable in a long run. Maybe we will witness that remarkable moment in 50 years.
+
+\end{enumerate}
+
+\end{homeworkProblem}
+
+%
+% Problem 2
+% 
+\newpage
+\begin{homeworkProblem}
+\textit{(27 pts.)} For each of the following assertions, say whether it is true or false and support your answer with examples or counterexamples where appropriate.
+
+\begin{enumerate}[label=\alph*.]
+    \item An agent that senses only partial information about the state cannot be perfectly rational.
+    
+    \textbf{False}. The vacuum-cleaning agent example from textbook at page 38 is rational but doesn’t observe the state of the square that is adjacent to it. Thus, it is not true.
+    
+    \item There exist task environments in which no pure reflex agent can behave rationally.
+    
+    \textbf{True}. Pure reflex agent will be rational in any task where memory of previous moves is required. For instance, a battleship game. 
+    
+    \item There exists a task environment in which every agent is rational. 
+    
+    \textbf{True}. Assume we have a task environment in which all actions (including no action) give the same reward, then every agent is rational at this point of view.
+
+    \item The input to an agent program is the same as the input to the agent function.
+
+    \textbf{False}. The input to an agent function is the percept history. However, the input to an agent program is only the current percept; it is up to the agent's program to record any relevant history needed to make decisions.
+    
+    \item Every agent function is implementable by some program/machine combination.
+    
+    \textbf{False}. An agent function is an abstract mathematical description while the agent program is a concrete implementation running within some physical system. Since the agent function is just an abstract description it is completely possible that there exists cases in which an agent program will fail due to memory limitation.
+    
+    \item Suppose an agent selects its action uniformly at random from the set of possible actions. There exists a deterministic task environment in which this agent is rational. 
+    
+    \textbf{True}. Again, like assertion c, considering an environment where all actions always give equal reward. In this case, the agent is still rational because it gets same reward for any sequence of actions. 
+    
+    \item It is possible for a given agent to be perfectly rational in two distinct task environments.
+
+    \textbf{True}. Consider two environments based on betting on the outcomes of tossing two coins. In environment A, the coins are fair, in environment B, the coins are biased to always give heads. The agent can bet on what the sum of the heads appears in each toss, with equal reward on all possible outcomes for guessing correctly. The agent that always bets on 2 will be rational in both cases.
+    
+    \item Every agent is rational in an unobservable environment. 
+    
+    \textbf{False}. There is a simple case in which this can be proven false; the vacuum agent that cleans. If the agent moves but does not clean, it would not be rational.
+    
+    \item A perfectly playing poker-playing agent never loses. 
+    
+    \textbf{False}. For example, let two perfectly playing agents play against each other. One of them must lose, otherwise it is not a poker game.
+
+\end{enumerate}
+
+\end{homeworkProblem}
+
+\pagebreak
+
+\begin{thebibliography}{9}
+\bibitem{AI_textbook} 
+Russell, Stuart and Norvig, Peter. 
+\textit{Artificial Intelligence: A Modern Approach}. 
+Prentice Hall Press, Upper Saddle River, NJ, USA, 2009.
+ 
+\bibitem{wiki_Loebner} 
+\texttt{https://en.wikipedia.org/wiki/Loebner\_Prize}
+
+\bibitem{wiki_Turing_test} 
+\texttt{https://en.wikipedia.org/wiki/Turing\_test}
+
+\bibitem{wiki_Mitsuku} 
+\texttt{https://en.wikipedia.org/wiki/Mitsuku}
+ 
+\bibitem{loabner_prize} 
+\texttt{https://www.aisb.org.uk/events/loebner-prize}
+
+\bibitem{LP2017}
+\texttt{https://chatbotsmagazine.com/how-to-win-a-turing-test-the-loebner-prize-3ac2752250f1}
+
+\bibitem{alphagozero}
+Silver, David, et al.
+\textit{Mastering the game of Go without human knowledge}. 
+Nature, Macmillan Publishers Limited, 2017.
+
+\bibitem{mitsuku}
+\texttt{https://www.pandorabots.com/mitsuku/}
+
+\end{thebibliography}
+
+\end{document}
