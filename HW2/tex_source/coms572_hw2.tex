@@ -159,31 +159,35 @@ mathescape=true}
     
     \textbf{Answer:}
     
+    States: Planar map with regions with or wihout colors.
+    
     Initial State: Planar map with no regions colored.
     
-    Goal Test: All regions of the map are colored and no two adjacent regions have the same color.
- 
-    Successor function: Choose an uncolored region and color it with a color that is different from all adjacent regions.
+    Actions: Choose an uncolored region and color it with one of the four colors and make it different from all adjacent regions.
     
-    Cost function: Number of moves.
+    Goal Test: All regions of the map are colored and no two adjacent regions have the same color.
+    
+    Path Cost: 1 per action.
     
     \item[d.] You have three jugs, measuring 12 gallons, 8 gallons, and 3 gallons, and a water faucet. You can fill the jugs up or empty them out from one to another or onto the ground. You need to measure out exactly one gallon.
     
     \textbf{Answer:}
     
-    Initial state: volumn of water in jugs (in gallons) [0, 0, 0]
+    States: 3 jugs with water, say [i, j, k] (in gallons)
     
-    Goal test: jugs have water [i, j, k], where one of i, j, k is 1.
+    Initial state: No water in all jugs, [0, 0, 0]
+    
+    Actions:
+    
+    1. Fill one of the jugs, [12, j, k] or [i, 8, k] or [i, j, 3]; 
+    
+    2. Empty one of them, [0, j, k] or [i, 0, k] or [i, j, 0]; 
+    
+    3. For any two jugs A and B, with current water X gallons in A and Y gallons in B, pour water from jug B to jug A; this makes jug A to have water min(X+Y, capacity of jug A) gallons, and jug B to have water (X + Y - min(X+Y, capacity of jug A)). 
+    
+    Goal test: The amount of water in 3 jugs [i, j, k], where at least one of i, j, k is 1.
 
-    Successor functions: 
-    
-    1. Given jugs with water [i, j, k], fill one of them we have [12, j, k], [i, 8, k], [i, j, 3]; 
-    
-    2. Empty one of them we get [0, j, k], [i, 0, k], [i, j, 0]; 
-    
-    3. For any two jugs A and B, with current water X gallons in A and Y gallons in B, pour water in jug B into jug A; this makes jug A to have water min(X+Y, capacity of jug A) gallons, and jug B to have water (X + Y - min(X+Y, capacity of jug A)). 
-
-    Cost function: Number of moves, or possibly amount of water used.
+    Path Cost: 1 per action.
 
 \end{enumerate}
 
