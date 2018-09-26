@@ -1,17 +1,20 @@
 import sys
-import operator
+import Queue
 
+# get page content
 def getContent(path):
     content=''
     with open(path, 'r') as content_file:
         content += content_file.read()
     return content
 
+# check if the goal page is reached
 def isGoalFound(content, goal):
     if goal in content:
         return True
     return False
 
+# extract href links from a splited token list
 def getHrefList(token_list):
     href_list = []
     while True:
@@ -31,52 +34,77 @@ def getHrefList(token_list):
 
 ## BFS
 def bfs(folder, INIT_PAGE, GOAL):
-
     visited = [INIT_PAGE]
-    current_list = [[INIT_PAGE, []]]
-    next_list = []
-
-    # print current_list
+    # initialize the queue
+    q = []
+    q.append([INIT_PAGE, []])
 
     num_visit = 1 # keep track of pages visited, start from 1 (first page)
     num_len = 0 # keep track of steps to reach the goal
-    while len(current_list) > 0:
-        for page in current_list:
-            if page[0] not in visited:
-                num_visit+=1
-                visited.append(page[0])
-            content = getContent(folder + page[0])
-            seq = list(page[1])
-            if isGoalFound(content, GOAL):
-                res_seq = list(seq)
-                res_seq.append(page[0])
-                print "================"
-                print "result ",res_seq
-                print num_visit, num_len
-                next_list = []
-                break
 
-            for href in getHrefList(content.split()):
-                if href[0] not in visited:
-                    # next_list.append([href[0],list(seq).append(page[0])])
-                    temp_seq = list(seq)
-                    temp_seq.append(page[0])
-                    next_list.append([href[0],temp_seq])
-                    # print next_list
+    while q:
+        # get the item from queue
+        page = q.pop()
+        if page[0] not in visited:
+            num_visit+=1
+            visited.append(page[0])
+        content = getContent(folder + page[0])
+        seq = list(page[1])
+        if isGoalFound(content, GOAL):
+            res_seq = list(seq)
+            res_seq.append(page[0])
 
-        current_list = list(next_list)
-        next_list = []
-        num_len+=1
+            # output the result sequence
+            print "result ",res_seq
+            # output the visited nodes and length of result path
+            print num_visit, len(res_seq)-1
+            break
+
+        for href in getHrefList(content.split()):
+            if href[0] not in visited:
+                temp_seq = list(seq)
+                temp_seq.append(page[0])
+                # add new ones to the queue
+                q = [[href[0],temp_seq]] + q
+
+# DFS non-recursive
+def dfs_nr(start, folder, GOAL):
+
+    # stack, last in first out
+    stack = []
+    # initialize the stack
+    stack += [(start,[])] # list of tuples (node, [path previous to this node])
+    visited = []
+
+    while stack:
+        # get the item from stack
+        current = stack.pop()
+        visited.append(current[0])
+        content = getContent(folder + current[0])
+
+        if isGoalFound(content, GOAL):
+            print "result ", current[1]+[current[0]]
+            print len(visited), len(current[1])
+            break
+
+        # get all the neighbor links on current page
+        href_list = getHrefList(content.split())
+        for href in href_list:
+            # check if it's in the visited or the stack
+            if href[0] in visited or href[0] in [s[0] for s in stack]:
+                continue
+            # push it to the stack
+            stack.append((href[0], current[1]+[current[0]]))
+
 
 ## DFS recursive
-def dfs(seq, current, folder, GOAL, visited):
-
-    visited += [current]
+def dfs_r(seq, current, folder, GOAL, visited):
 
     content = getContent(folder + current)
 
+    visited += [current]
+
     if isGoalFound(content, GOAL):
-        print "================"
         print "result ", seq+[current]
         print len(visited), len(seq)
         return visited, True
@@ -92,28 +120,9 @@ def dfs(seq, current, folder, GOAL, visited):
 
     return visited, False
 
-## DFS non-recursive
-def dfs_nr(current, folder, GOAL):
-    stack, visited = [current], []
-
-    while stack:
-        current = stack.pop()
-        if current in visited:
-            continue
-
-        visited.append(current)
-        content = getContent(folder + current)
-
-        if isGoalFound(content, GOAL):
-            print "================"
-            print current
-            print len(visited)
-            break
-
-        next_list = getHrefList(content.split())
-
-        for href in next_list:
-            stack.append(href[0])
+#########
+# Best First Search
+#########
 
 # count number of consecutive QUERY words in numerical order
 def consec_q(s):
@@ -139,58 +148,32 @@ def consec_q(s):
 
     return max
 
-## DFS recursive
-def dfs_best(seq, current, folder, GOAL, visited):
-
-    visited += [current]
-
-    content = getContent(folder + current)
-    # pg_score = content.count("QUERY")
-
-    if isGoalFound(content, GOAL):
-        print "================"
-        print "result ", seq+[current]
-        print len(visited), len(seq)
-        return visited, True
-
-    next_list = getHrefList(content.split())
-    dict_w_score = {}
-
-    if len(next_list) > 0:
-        for href in next_list:
-            href_score1 = href[1].count("QUERY")
-            href_score2 = consec_q(href[1])
-            if href[0] not in visited:
-                dict_w_score[href[0]] = href_score2*10+href_score1
-        # print dict_w_score
-        ranked_list = sorted(dict_w_score.items(), key=lambda x: x[1])
-        ranked_list.reverse()
-        # print ranked_list
-        for ranked_href in ranked_list:
-            if ranked_href[1] > 0:
-                visited, flag = dfs(seq+[current], ranked_href[0], folder, GOAL, visited)
-                if flag:
-                    return visited, flag
-
-    return visited, False
-
-def best_new(folder, INIT_PAGE, GOAL):
+## Best first search guided by heuristic functions
+## it collects information on each page it visits
+## and rank all the links by their scores
+## then, pick the highest scored link and collect new info on the new page
+## together with all previously collected info, a new ranked list is generated
+## then pick the top one from the new list and repeat the process
+def best(folder, INIT_PAGE, GOAL):
     ranked_list = [(INIT_PAGE, 0, [])]
     added_list = [INIT_PAGE]
 
     visited_count = 0
 
     while ranked_list:
-        visited_count += 1
+        # click on the one with highest score
         current = ranked_list.pop()
         content = getContent(folder + current[0])
         pg_score = content.count("QUERY")
 
+        visited_count += 1
+
         if isGoalFound(content, GOAL):
-            print "================"
+            ## output the result sequence
             print "result ", current[2]+[current[0]]
+            ## output the nodes visited and length of the answer
             print visited_count, len(current[2])
-            print ranked_list
+            # stop searching
             break
 
         href_list = getHrefList(content.split())
@@ -198,15 +181,23 @@ def best_new(folder, INIT_PAGE, GOAL):
             if href[0] in added_list:
                 continue
             added_list.append(href[0])
+            # calculate number of 'QUERY's in the link text
             href_score1 = href[1].count("QUERY")
+            # count number of consecutive 'QUERY's in the link text
             href_score2 = consec_q(href[1])
-            ranked_list.append((href[0], href_score2*1000+href_score1*100+pg_score, current[2]+[current[0]]))
-        # print ranked_list
-        ranked_list = sorted(ranked_list, key=lambda x: x[1])
-        ranked_list.reverse()
-        # print ranked_list
-        # break
+            # calculate the score for heuristics
+            score = href_score2*1000+href_score1*100+pg_score
+            # add new member to the list
+            ranked_list.append((href[0], score, current[2]+[current[0]]))
 
+        # sort the list by scores
+        # the ones with highest score should at the bottom of the list
+        # (the bottom of a list will pop up first)
+        ranked_list = sorted(ranked_list, key=lambda x: x[1])
+
+## Beam search
+## its basically a best-first search with ranked list no longer than N
+## We pick N = 20 here
 def beam(folder, INIT_PAGE, GOAL):
     ranked_list = [(INIT_PAGE, 0, [])]
     added_list = [INIT_PAGE]
@@ -214,16 +205,19 @@ def beam(folder, INIT_PAGE, GOAL):
     visited_count = 0
 
     while ranked_list:
-        visited_count += 1
+        # pop the one with highest score
         current = ranked_list.pop()
         content = getContent(folder + current[0])
         pg_score = content.count("QUERY")
+        visited_count += 1
 
         if isGoalFound(content, GOAL):
-            print "================"
+            # print "================"
+            ## output the sequence
             print "result ", current[2]+[current[0]]
+            ## output the nodes visited and length of the answer
             print visited_count, len(current[2])
-            print ranked_list
+            # stop searching
             break
 
         href_list = getHrefList(content.split())
@@ -231,127 +225,66 @@ def beam(folder, INIT_PAGE, GOAL):
             if href[0] in added_list:
                 continue
             added_list.append(href[0])
+            # calculate number of 'QUERY's in the link text
             href_score1 = href[1].count("QUERY")
+            # count number of consecutive 'QUERY's in the link text
             href_score2 = consec_q(href[1])
-            ranked_list.append((href[0], href_score2*1000+href_score1*100+pg_score, current[2]+[current[0]]))
-        # print ranked_list
+            # calculate the score for heuristics
+            score = href_score2*1000+href_score1*100+pg_score*1
+            # add new member to the list
+            ranked_list.append((href[0], score, current[2]+[current[0]]))
+
+        # sort the list by the score
+        # highest score at the end where will be popped up first
         ranked_list = sorted(ranked_list, key=lambda x: x[1])
-        ranked_list.reverse()
-        ranked_list = ranked_list[:20]
-        print len(ranked_list)
-        # break
-        # print ranked_list
-        # break
-
-## Best first search guided by heuristic functions
-## it uses the shell of BFS to collect as much info
-## then follow the link which ranks the first on each step
-def best(folder, INIT_PAGE, GOAL):
-    content = getContent(folder + INIT_PAGE)
-    # print content.count("QUERY")
-    # print content.split()
-    # print consec_q("QUERY1 QUERY1 QUERY2 QUERY3 QUERY2 QUERY3 QUERY4 QUERY5 w16 QUERY3 w36 w19")
-
-    visited = [INIT_PAGE]
-    current_list = [[INIT_PAGE, []]]
-    next_list = []
-
-    num_visit = 1 # keep track of pages visited, start from 1 (first page)
-    num_len = 0 # keep track of steps to reach the goal
-    while len(current_list) > 0:
-        for page in current_list:
-            if page[0] not in visited:
-                num_visit+=1
-                visited.append(page[0])
-            content = getContent(folder + page[0])
-            pg_score = content.count("QUERY")
-            seq = list(page[1])
-
-            if isGoalFound(content, GOAL):
-                res_seq = list(seq)
-                res_seq.append(page[0])
-                print "================"
-                print "result ",res_seq
-                print num_visit, num_len
-                next_list = []
-                break
-
-            for href in getHrefList(content.split()):
-                href_score1 = href[1].count("QUERY")
-                href_score2 = consec_q(href[1])
-                # print href_score1, href_score2
-                if href[0] not in visited:
-                    # next_list.append([href[0],list(seq).append(page[0])])
-                    temp_seq = list(seq)
-                    temp_seq.append(page[0])
-                    next_list.append([href[0],temp_seq])
-                    # print next_list
-
-        current_list = list(next_list)
-        next_list = []
-        num_len+=1
-
+        # keep items in the list less than 20 to save memory
+        ranked_list = ranked_list[-20:]
 
 def main(folder, INIT_PAGE, GOAL, usrInput, num):
     if num > 10: # Limit of invalid inputs. To avoid stack overflow
         sys.exit("Too many invalid inputs, terminate.")
-
     if usrInput == "1" or usrInput.lower() == "bfs":
+        print "========BFS========"
         bfs(folder, INIT_PAGE, GOAL)
     elif usrInput == "2" or usrInput.lower() == "dfs":
-        dfs([], INIT_PAGE, folder, GOAL, [])
-        # dfs_nr(INIT_PAGE, folder, GOAL)
+        print "========DFS========"
+        # dfs_r([], INIT_PAGE, folder, GOAL, [])
+        dfs_nr(INIT_PAGE, folder, GOAL)
     elif usrInput == "3" or usrInput.lower() == "best":
-        # print "BEST"
-        # best(folder, INIT_PAGE, GOAL)
-        best_new(folder, INIT_PAGE, GOAL)
-        # dfs_best([], 'page70.html', folder, GOAL, [])
+        print "========BEST========"
+        best(folder, INIT_PAGE, GOAL)
     elif usrInput == "4" or usrInput.lower() == "beam":
-        # print "BEAM"
+        print "========BEAM========"
         beam(folder, INIT_PAGE, GOAL)
-    else:
+    else: # re-prompt input from user
         print "** Invalid input **"
         print "Pick an algorithm:"
         print "(1.BFS; 2.DFS; 3.BEST; 4.BEAM)"
         reInput = str(raw_input())
         main(folder, INIT_PAGE, GOAL, reInput, num+1)
-    # content = getContent(INIT_URL)
-    #
-    # content_split = getContent(INIT_URL).split()
-    #
-    # print getHrefList(content_split)
-
-    # DFS
-    visited = []
-
-
-
-
 
 if __name__ == '__main__':
-    # folder = raw_input("Enter the target folder:\n")
-    # print str(folder)
-    folder = 'given/intranets/intranet1/'
+    intranet_num = sys.argv[1]
+    mode = int(sys.argv[2])
+
+    folder = 'given/intranets/intranet'+intranet_num+'/'
     INIT_PAGE = 'page1.html'
     GOAL = 'QUERY1 QUERY2 QUERY3 QUERY4'
 
-    print "Pick an algorithm:"
-    print "(1.BFS; 2.DFS; 3.BEST; 4.BEAM)"
-    usrInput = str(raw_input())
-    main(folder, INIT_PAGE, GOAL, usrInput, 0)
-
-#
-# a = content_split.index("HREF")
-# # print content_split[a+2]
-#
-# temp = a
-# a = content_split[a+1:].index("HREF")
-# # print content_split[temp+1+a+2]
-#
-# word = "QUERY1"
-#
-# # print isGoalFound(content, word)
-#
-# word = "QUERY1 QUERY2 QUERY3 QUERY4"
-#
-# # print isGoalFound(content, word)
+    ## single run with user input
+    if mode == 0:
+        print "Pick an algorithm:"
+        print "(1.BFS; 2.DFS; 3.BEST; 4.BEAM)"
+        usrInput = str(raw_input())
+        main(folder, INIT_PAGE, GOAL, usrInput, 0)
+    ## multi runs all algorithms for one intranet
+    else:
+        print "***** Intranet_" + intranet_num + " *****"
+        print "========BFS========"
+        bfs(folder, INIT_PAGE, GOAL)
+        print "========DFS========"
+        dfs_nr(INIT_PAGE, folder, GOAL)
+        print "========BEST========"
+        best(folder, INIT_PAGE, GOAL)
+        print "========BEAM========"
+        beam(folder, INIT_PAGE, GOAL)
