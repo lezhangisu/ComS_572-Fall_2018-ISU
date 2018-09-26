@@ -1,5 +1,12 @@
+## This is a problem solver written by Le Zhang Sept. 2018
+## It is written for Lab1 in course ComS 572
+## The program applies 4 different searching algorithms to intranets
+## To run the program:
+##    python solver.py num1 num2
+## where num1 is the index number of intranet you want to parse
+## num2 is the mode you want to use (0 for single-algo, 1 for multi-algo)            
+
 import sys
-import Queue
 
 # get page content
 def getContent(path):
