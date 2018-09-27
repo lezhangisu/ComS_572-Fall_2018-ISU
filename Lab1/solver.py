@@ -4,7 +4,7 @@
 ## To run the program:
 ##    python solver.py num1 num2
 ## where num1 is the index number of intranet you want to parse
-## num2 is the mode you want to use (0 for single-algo, 1 for multi-algo)            
+## num2 is the mode you want to use (0 for single-algo, 1 for multi-algo)
 
 import sys
 
@@ -46,15 +46,14 @@ def bfs(folder, INIT_PAGE, GOAL):
     q = []
     q.append([INIT_PAGE, []])
 
-    num_visit = 1 # keep track of pages visited, start from 1 (first page)
+    num_visit = 0 # keep track of pages visited, start from 1 (first page)
     num_len = 0 # keep track of steps to reach the goal
 
     while q:
         # get the item from queue
         page = q.pop()
-        if page[0] not in visited:
-            num_visit+=1
-            visited.append(page[0])
+        num_visit+=1
+        visited.append(page[0])
         content = getContent(folder + page[0])
         seq = list(page[1])
         if isGoalFound(content, GOAL):
@@ -68,7 +67,7 @@ def bfs(folder, INIT_PAGE, GOAL):
             break
 
         for href in getHrefList(content.split()):
-            if href[0] not in visited:
+            if href[0] not in visited and href[0] not in [p[0] for p in q]:
                 temp_seq = list(seq)
                 temp_seq.append(page[0])
                 # add new ones to the queue
