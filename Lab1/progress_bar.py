@@ -40,19 +40,11 @@ class ShowProcess():
         self.i = 0
 
 if __name__=='__main__':
-    max_steps = 19
+    max_steps = 30
 
-    print "stage 1"
+    print "Some Title"
     process_bar = ShowProcess(max_steps, 'Done')
 
-    # for i in range(max_steps):
-    # process_bar.show_process()
-    # time.sleep(0.01)
-    # print "\nDone"
-    #
-    # print "stage 2"
-    # process_bar = ShowProcess(max_steps, 'Done')
-    #
-    # for i in range(max_steps):
-    #     process_bar.show_process()
-    #     time.sleep(0.05)
+    for i in range(max_steps):
+        process_bar.show_process()
+        time.sleep(0.05)

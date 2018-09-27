@@ -92,10 +92,8 @@ def bfs(ROOT_PAGE, INIT_PAGE, GOAL):
             cnt = len(queue)-1
             stage += 1
             print ''
-            print "stage "+str(stage) + ", " + str(cnt) + " in total" 
+            print "stage "+str(stage) + ", " + str(cnt) + " in total"
             process_bar = ShowProcess(cnt, 'Done')
-            process_bar.show_process()
-
 
         # get the item from queue
         page = queue.pop()
@@ -134,29 +132,3 @@ if __name__ == '__main__':
     # print getHref(ROOT_PAGE+INIT_PAGE)
     bfs(ROOT_PAGE, INIT_PAGE, GOAL)
     # getContent(ROOT_PAGE+INIT_PAGE)
-
-
-
-
-
-# import requests
-# from bs4 import BeautifulSoup
-# import urllib2
-# import re
-#
-# import sys
-# reload(sys)
-# sys.setdefaultencoding("utf8")
-#
-# html_page = urllib2.urlopen("https://en.wikipedia.org/wiki/Sport")
-#
-# soup = BeautifulSoup(html_page, "lxml")
-#
-# links = []
-# for link in soup.findAll('a'):
-#     href = str(link.get('href'))
-#     if href.startswith('/wiki/'):
-#
-#         links.append(href)
-#
-# print(links)
