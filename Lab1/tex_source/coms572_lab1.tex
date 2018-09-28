@@ -177,7 +177,7 @@ The sample intranets 1, 5, and 7 have been randomly created, with the following 
     h(A) = x_1 + 100x_2 + 1000x_3
     $$
     
-    In my opinion, my heuristic function is admissible. Because the strongest propensity takes control anytime before the weaker ones. And different levels of scores never mix with each other so links with higher probability of finding the goal will always be explored first. As a result, the heuristic function never overestimate the cost to reach the goal in this problem. Therefore, I'd say it is admissible. 
+    In my opinion, my heuristic function is not admissible. An admissible heuristic function never overestimate the cost to reach the goal. However, as we can see from the results posted below, my algorithm visits more nodes than the actual nodes in the solution path which means that it somehow overestimates the cost. Even though the heuristic function seperately consider the impact of three propensities and yields good results, I'd say that it is still not admissible. 
     
     \item[2c.] How well did your heuristic work on the sample intranets
     
