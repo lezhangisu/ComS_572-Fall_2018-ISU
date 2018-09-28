@@ -3,6 +3,8 @@
 
 "solver.py" is the program that works on synthetic intranets.
 
+Change the "folder" variable to corresponding relative path containing "intranets/" folder before running.
+
 Run:
 
 ```
