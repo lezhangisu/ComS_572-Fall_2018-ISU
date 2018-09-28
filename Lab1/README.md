@@ -9,7 +9,9 @@ Run:
 python solver.py num1 num2
 ```
 
-Where num1 is the index number of intranets, and num2 is the mode (0 for single-algorithm mode, 1 for multi-algorithm mode)
+Where num1 is the index number of intranets
+
+and num2 is the mode (0 for single-algorithm mode, 1 for multi-algorithm mode)
 
 ### 2. Solution to World Wide Web Searching
 
