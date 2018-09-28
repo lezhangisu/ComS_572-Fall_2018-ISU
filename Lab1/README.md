@@ -1,5 +1,5 @@
-## Solution Programs to Lab1
-### Solution to Intranets
+## Lab1 Programs
+### 1. Solution to Intranets Searching
 
 "solver.py" is the program that works on synthetic intranets.
 
@@ -11,7 +11,7 @@ python solver.py num1 num2
 
 Where num1 is the index number of intranets, and num2 is the mode (0 for single-algorithm mode, 1 for multi-algorithm mode)
 
-### Solution to World Wide Web
+### 2. Solution to World Wide Web Searching
 
 "real_web.py" is the program that parses on the WWW pages.
 
