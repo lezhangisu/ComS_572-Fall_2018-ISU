@@ -19,7 +19,7 @@ And `num2` is the mode (0 = single-algorithm mode, 1 = multi-algorithm mode).
 
 By default, it parses webpages from Wikipedia. It only parses the webpages within Wikipedia domain.
 
-The default starting page is [](https://en.wikipedia.org/wiki/Sports), query words are "Paolo Cesare Maldini".
+The default starting page is [https://en.wikipedia.org/wiki/Sports](https://en.wikipedia.org/wiki/Sports), query words are "Paolo Cesare Maldini".
 
 You can change your query words and initial page in the .py file before you run it.
 
