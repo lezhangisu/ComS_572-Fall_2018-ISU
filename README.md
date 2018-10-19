@@ -5,4 +5,4 @@
 ### [Final Project]()
 
 ### Reference
-[AI Problems and Solutions](http://wiki.lihebi.com/ai.html#org0856702)
+[AI Problems and Solutions](http://wiki.lihebi.com/ai.html)
