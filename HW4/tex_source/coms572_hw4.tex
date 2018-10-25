@@ -1,0 +1,524 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{enumitem}
+\usepackage{listings}
+
+\usetikzlibrary{automata,positioning}
+
+%
+% Basic Document Settings
+%
+
+\lstset{%
+mathescape=true}
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{\hmwkClass\ : \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+\newenvironment{homeworkProblem}[1][-1]{
+    \ifnum#1>0
+        \setcounter{homeworkProblemCounter}{#1}
+    \fi
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% Homework Details
+%   - Title
+%   - Due date
+%   - Class
+%   - Section/Time
+%   - Instructor
+%   - Author
+%
+
+\newcommand{\hmwkTitle}{Homework\ \#4}
+\newcommand{\hmwkDueDate}{October 19, 2018}
+\newcommand{\hmwkClass}{COMS 572}
+\newcommand{\hmwkClassTime}{}
+\newcommand{\hmwkClassInstructor}{Professor Jin Tian}
+\newcommand{\hmwkAuthorName}{Le Zhang}
+
+%
+% Title Page
+%
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{\hmwkDueDate\ by 17:00pm}\\
+    \vspace{0.1in}\large{\textit{\hmwkClassInstructor\ \hmwkClassTime}}
+    \vspace{3in}
+}
+
+\author{\textbf{\hmwkAuthorName}}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Cartesian product
+\newcommand{\Cross}{\mathbin{\tikz [x=1.4ex,y=1.4ex,line width=.2ex] \draw (0,0) -- (1,1) (0,1) -- (1,0);}}%
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\begin{document}
+
+\maketitle
+
+%
+% Problem 1
+%
+\pagebreak
+\begin{homeworkProblem}
+\textit{(10 pts.)} Give precise formulations for each of the following as constraint satisfaction problems:
+
+\begin{enumerate}[label=\alph*.]
+    
+    \item[b.] Class scheduling: There is a fixed number of professors and classrooms, a list of classes to be offered, and a list of possible time slots for classes. Each professor has a set of classes that he or she can teach.
+    
+    \textbf{Answer:}
+    
+    Variables:
+    
+        \begin{enumerate}[label = $\circ$]
+        
+        \item $P_i$ for each professor. $P_i.class$ is the set of classes a certain professor can teach.
+        
+        \item $R_i$ for each classroom
+        
+        \item $C_i$ for each class
+        
+        \item $T_i$ for each time slot
+        
+        \item Class assignment $A_i$, with each assignment being a 4 tuple: ($A_i.prof, A_i.room, A_i.class, A_i.time$).
+        
+        \end{enumerate}
+
+    Domain:
+        \begin{enumerate}[label = $\circ$]
+        \item $A_i.prof\in {P_j}$
+        \item $A_i.room\in {R_j}$
+        \item $A_i.class\in {C_j}$
+        \item $A_i.time\in {T_j}$
+        \end{enumerate}
+    
+    Constraint:
+        \begin{enumerate}[label = $\circ$]
+        \item $A_i.class\in A_i.prof.class$ for all $i$.
+        \item $\neg(A_i.time = A_j.time\land A_i.prof = A_j.prof)$ for all $i\neq j$
+        \item $\neg(A_i.time = A_j.time\land A_i.room = A_j.room)$ for all $i\neq j$
+        \end{enumerate}
+    
+
+\end{enumerate}
+
+\end{homeworkProblem}
+
+\pagebreak
+% 
+% Problem 2
+% 
+\begin{homeworkProblem}
+\textit{(20 pts.)} Consider the following logic puzzle: In five houses, each with a different color, live five persons of different nationalities, each of whom prefers a different brand of candy, a different drink, and a different pet. Given the following facts, the questions to answer are “Where does the zebra live, and in which house do they drink water?”
+
+\begin{enumerate}[label=\Alph*.]
+
+\item The Englishman lives in the red house.
+
+\item The Spaniard owns the dog.
+
+\item The Norwegian lives in the first house on the left.
+
+\item The green house is immediately to the right of the ivory house.
+
+\item The man who eats Hershey bars lives in the house next to the man with the fox. 
+
+\item Kit Kats are eaten in the yellow house.
+
+\item The Norwegian lives next to the blue house.
+
+\item The Smarties eater owns snails.
+
+\item The Snickers eater drinks orange juice.
+
+\item The Ukrainian drinks tea.
+
+\item The Japanese eats Milky Ways.
+
+\item Kit Kats are eaten in a house next to the house where the horse is kept.
+
+\item Coffee is drunk in the green house.
+
+\item Milk is drunk in the middle house.
+
+\end{enumerate}
+Discuss different representations of this problem as a CSP.
+
+Formulate the puzzle as a CSP. (Note: Discussion of different representations not required, solution of puzzle not required.)
+
+\textbf{Answer:}
+
+For this problem, we have 5 different variables each with 5 different values:
+\vspace{0.5cm}
+
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+\textbf{Color} & \textbf{Nationality} & \textbf{Drink} & \textbf{Candy} & \textbf{Pet} \\ \hline
+red    & English     & orange juice & Hershey bar & dog   \\ \hline
+green  & Spanish     & tea          & Kit Kat     & fox   \\ \hline
+ivory  & Norwegian   & coffee       & Smarties    & snail \\ \hline
+yellow & Ukrainian   & milk         & Snickers    & horse \\ \hline
+blue   & Japanese    & water        & Milky Way   & zebra \\ \hline
+\end{tabular}
+
+\pagebreak
+
+We can assign a number from 1 to 5 to each house, left to right respectively. We have constraints from A to N given by the problem. Each letter of the constraint should have exact one corresponding house number from 1 to 5. We can now generate a 5x5 table and insert each constraint to its corresponding slot. In this table, for each column, each number 1 to 5 should appear exactly once. 
+
+\vspace{0.3cm}
+
+If we use \underline{W} to represent water, and \underline{Z} to represent Zebra, We will have:
+
+\vspace{0.2cm}
+
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+\textbf{Color} & \textbf{Nationality} & \textbf{Drink} & \textbf{Candy} & \textbf{Pet} \\ \hline
+A              & A                    & I              & E              & B            \\ \hline
+D=M            & B                    & J              & F=L            & E$\pm$1         \\ \hline
+D-1            & C=1=G$\pm$1            & M              & H              & H            \\ \hline
+F              & J                    & N=3            & I              & L$\pm$1         \\ \hline
+G              & K                    & \underline{W}              & K              & \underline{Z}            \\ \hline
+\end{tabular}
+
+\vspace{0.3cm}
+
+Then, we can cancel out some duplication(like D=M, C=G$\pm$1, F=L, etc.), and \textbf{deduce F=1}, we have:
+
+\vspace{0.2cm}
+
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+\textbf{Color} & \textbf{Nationality} & \textbf{Drink} & \textbf{Candy} & \textbf{Pet} \\ \hline
+A              & A                    & I              & E              & B            \\ \hline
+D              & B                    & J              & F=1              & E$\pm$1      \\ \hline
+D-1            & 1                    & D              & H              & H            \\ \hline
+F=1              & J                    & 3              & I              & 2      \\ \hline
+2              & K                    & \underline{W}              & K              & \underline{Z}            \\ \hline
+\end{tabular}
+
+\vspace{0.3cm}
+
+Thus, we can have following constraints with unavailable values crossed out:
+
+% \begin{enumerate}
+%     \item[] $A\neq 1,2$
+%     \item[] $B\neq 1,2$
+%     \item[] $D\neq 1,2,3$
+%     \item[] $E\neq 1$
+%     \item[] $F\neq 2,3,4,5$
+%     \item[] $H\neq 1,2$
+%     \item[] $I\neq 1,3$
+%     \item[] $J\neq 1,3$
+%     \item[] $K\neq 1$
+% \end{enumerate}
+\vspace{0.2cm}
+
+\begin{tabular}{l|lllll}
+\textbf{} & \textbf{1} & \textbf{2} & \textbf{3} & \textbf{4} & \textbf{5} \\\hline
+A         & X          & X          &            &            &            \\
+B         & X          & X          &            &            &            \\
+D         & X          & X          & X          &            &            \\
+E         & X          &            &            &            &            \\
+F         &            & X          & X          & X          & X          \\
+H         & X          & X          &            &            &            \\
+I         & X          &            & X          &            &            \\
+J         & X          &            & X          &            &            \\
+K         & X          &            &            &            &           
+\end{tabular}
+
+\vspace{0.3cm}
+
+Because I, J, D cannot be 1, if we look at column Drink, we know that \textbf{W=1}. 
+
+\vspace{0.1cm}
+
+\qquad If D=4, then from column Color and Drink, we know that A=5, I=5, J=2. So H, B, K must chose from ${2,3}$ which means one of column Nationality, Candy and Pet must have duplicate numbers, which is not allowed. Thus, \textbf{D has to be 5 and A=3}.
+
+\vspace{0.1cm}
+
+\qquad If J=4, from column Nationality, and $B\neq2$, B=5 and K=2; from column Drink, I=2. However, it violates column Candy because I=K=2 is not allowed here. 
+
+\vspace{0.1cm}
+
+\qquad Therefore, \textbf{J=2, I=4, K=5, B=4, E=3, H=3, Z=5}.
+
+\vspace{0.1cm}
+
+Now, we have the solution to this puzzle:
+
+\vspace{0.1cm}
+
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+\textbf{House}       & 1         & 2           & 3        & 4            & 5         \\ \hline
+\textbf{Color}       & yellow    & blue        & red      & ivory        & green     \\ \hline
+\textbf{Nationality} & Norwegian & Ukrainian   & English  & Spainish     & Japanese  \\ \hline
+\textbf{Drink}       & \textbf{WATER}     & tea         & milk     & orange juice & coffee    \\ \hline
+\textbf{Candy}       & Kit Kat   & Hershey bar & Smarties & Snickers     & Milky Way \\ \hline
+\textbf{Pet}         & fox       & horse       & snails   & dog          & \textbf{ZEBRA}     \\ \hline
+\end{tabular}
+
+\vspace{0.2cm}
+So \textbf{Zebra lives in green house}, and \textbf{in yellow house they drink water}.
+
+
+\end{homeworkProblem}
+
+\pagebreak
+% 
+% Problem 3
+% 
+\begin{homeworkProblem}
+\textit{(20 pts.)} (Adapted from Barwise and Etchemendy (1993).) Given the following, can you prove that the unicorn is mythical? How about magical? Horned?
+
+\begin{enumerate}[label=\alph*.]
+
+\item[]If the unicorn is mythical, then it is immortal, but if it is not mythical, then it is a mortal mammal. 
+\item[]If the unicorn is either immortal or a mammal, then it is horned. The unicorn is magical if it is horned.
+\end{enumerate}
+
+\textbf{Answer:}
+
+
+From the desctiptions we have:
+
+\begin{enumerate}[label=\alph*.]
+
+\item[1.] $Mythical\implies Immortal$
+
+\item[2.] $\neg Mythical\implies \neg Immortal \land Mammal$
+
+\item[3.] $Immortal\lor Mammal \implies Horned$
+
+\item[4.] $Horned\implies Magical$
+
+\end{enumerate}
+
+
+From 2, we get:
+
+\begin{enumerate}[label=\alph*.]
+\item[5.] $\neg Mythical\implies Mammal$
+\end{enumerate}
+From 1 and 5, we get:
+\begin{enumerate}[label=\alph*.]
+\item[6.] $Mythical \lor \neg Mythical \implies Immortal \lor Mammal$
+\end{enumerate}
+Then, with 3 and 6, we have:
+\begin{enumerate}[label=\alph*.]
+\item[7.] $Horned$
+\end{enumerate}
+With 4 and 7, we have:
+\begin{enumerate}[label=\alph*.]
+\item[8.] $Magical$
+\end{enumerate}
+Therefore, the unicorn is horned and magical. 
+
+However, we cannot prove it is mythical. 
+
+\end{homeworkProblem}
+
+\pagebreak
+% 
+% Problem 4
+% 
+\begin{homeworkProblem}
+\textit{(30 pts.)} Consider the following sentence:
+
+$$
+[(Food\implies Party)\lor(Drinks\implies Party)]\implies[(Food\land Drinks)\implies Party]
+$$
+
+\begin{enumerate}[label=\alph*.]
+
+    \item Determine, using enumeration, whether this sentence is valid, satisfiable (but not valid), or unsatisfiable.
+    
+    \textbf{Answer:}
+    
+    This sentence is valid because it is true for all cases.
+    
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+    \hline
+    $F$ & $P$ & $D$ & $F\Rightarrow P$ & $D\Rightarrow P$ & $(F\Rightarrow P) $     & $F\land D$ & $F\land D$       & $[(F\Rightarrow P) \lor (D\Rightarrow P)]$ \\ 
+        &     &     &                  &                  & $\lor (D\Rightarrow P)$ &           & $\Rightarrow P$ & $\Rightarrow [(F\land D)\Rightarrow P]$     \\ \hline
+    T   & T   & T   & T                & T                & T                       & T         & T               & T                                          \\ \hline
+    T   & T   & F   & T                & T                & T                       & F         & T               & T                                          \\ \hline
+    T   & F   & T   & F                & F                & F                       & T         & F               & T                                          \\ \hline
+    T   & F   & F   & F                & T                & T                       & F         & T               & T                                          \\ \hline
+    F   & T   & T   & T                & T                & T                       & F         & T               & T                                          \\ \hline
+    F   & T   & F   & T                & T                & T                       & F         & T               & T                                          \\ \hline
+    F   & F   & T   & T                & F                & T                       & F         & T               & T                                          \\ \hline
+    F   & F   & F   & T                & T                & T                       & F         & T               & T                                          \\ \hline
+    \end{tabular}
+    
+    
+    \item Convert the left-hand and right-hand sides of the main implication into CNF, showing each step, and explain how the results confirm your answer to (a).
+    
+    \begin{proof}
+    
+    $$
+    [(Food\implies Party)\lor(Drinks\implies Party)]\implies[(Food\land Drinks)\implies Party]
+    $$
+    $$
+    [(\neg Food\lor Party)\lor(\neg Drinks\lor Party)]\implies[\neg (Food\land Drinks)\lor Party]
+    $$
+    $$
+    [(\neg Food\lor Party)\lor(\neg Drinks\lor Party)]\implies[(\neg Food\lor \neg Drinks)\lor Party]
+    $$
+    $$
+    (\neg Food\lor \neg Drinks\lor Party)\implies(\neg Food\lor \neg Drinks\lor Party)
+    $$
+    
+    After the conversion, we can see that we have the exactly same form on both sides which implies that the original sentence is valid. Therefore, the answer to (a) is correct.
+    \end{proof}
+    
+    \item Prove your answer to (a) using resolution.
+    
+    \begin{proof}
+    
+    Assume we represent the left hand side and right hand side with $LHS$ and $RHS$ respectively. To prove the answer to (a), we need to show that $LHS\land \neg RHS$ cannot be satisfied.
+    
+    Initially, we have:
+    $$
+    LHS\land \neg RHS \equiv [(Food\implies Party)\lor(Drinks\implies Party)]\land \neg[(Food\land Drinks)\implies Party]
+    $$
+    
+    Then, we have:
+    $$
+    LHS\land \neg RHS \equiv (\neg Food\lor \neg Drinks\lor Party)\land (Food) \land (Drinks) \land(\neg Party)
+    $$
+    
+    As we can see, all the elements will be canceled so $LHS\land \neg RHS$ resolves to empty clause. Thus, we have proved that the original sentense is valid.
+   \end{proof}
+
+\end{enumerate}
+
+\end{homeworkProblem}
+
+% \pagebreak
+
+% \begin{thebibliography}{9}
+% \bibitem{AI_textbook} 
+% Russell, Stuart and Norvig, Peter. 
+% \textit{Artificial Intelligence: A Modern Approach}. 
+% Prentice Hall Press, Upper Saddle River, NJ, USA, 2009.
+ 
+% \bibitem{wiki_Loebner} 
+% \texttt{https://en.wikipedia.org/wiki/Loebner\_Prize}
+
+% \bibitem{wiki_Turing_test} 
+% \texttt{https://en.wikipedia.org/wiki/Turing\_test}
+
+% \bibitem{wiki_Mitsuku} 
+% \texttt{https://en.wikipedia.org/wiki/Mitsuku}
+ 
+% \bibitem{loabner_prize} 
+% \texttt{https://www.aisb.org.uk/events/loebner-prize}
+
+% \bibitem{LP2017}
+% \texttt{https://chatbotsmagazine.com/how-to-win-a-turing-test-the-loebner-prize-3ac2752250f1}
+
+% \bibitem{alphagozero}
+% Silver, David, et al.
+% \textit{Mastering the game of Go without human knowledge}. 
+% Nature, Macmillan Publishers Limited, 2017.
+
+% \bibitem{mitsuku}
+% \texttt{https://www.pandorabots.com/mitsuku/}
+
+% \end{thebibliography}
+
+\end{document}
