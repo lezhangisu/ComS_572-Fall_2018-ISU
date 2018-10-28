@@ -40,8 +40,8 @@ Perfection maximizes actual performance.
 5. Compensate for partial prior knowledge, adapt
 
 ### Environment Types
-    Types   | Chess | Backgammon | Taxi Driving
------------- | ------ | ------- | ---------
+ Types | Chess | Backgammon | Taxi Driving
+------ | ----- | ---------- | ------------
 Observable?? | Full | Full | Partial
 Deterministic?? | Yes | |
 Static?? | | |
