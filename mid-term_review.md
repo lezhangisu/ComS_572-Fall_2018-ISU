@@ -61,7 +61,10 @@ HW1 Problem 2 (T/F)
 <details><summary>answer</summary>
 <p>
 
-**False**. The vacuum-cleaning agent example from textbook at page 38 is rational but doesnt observe the state of the square that is adjacent to it. Thus, it is not true.
+**False**.
+```
+The vacuum-cleaning agent example from textbook at page 38 is rational but doesnt observe the state of the square that is adjacent to it. Thus, it is not true.
+```
 
 </p>
 </details>
@@ -71,7 +74,10 @@ HW1 Problem 2 (T/F)
 <details><summary>answer</summary>
 <p>
 
-**True**. Pure reflex agent will be rational in any task where memory of previous moves is required. For instance, a battleship game.
+**True**.
+```
+Pure reflex agent will be rational in any task where memory of previous moves is required. For instance, a battleship game.
+```
 
 </p>
 </details>
@@ -81,7 +87,10 @@ HW1 Problem 2 (T/F)
 <details><summary>answer</summary>
 <p>
 
-**True**. Assume we have a task environment in which all actions (including no action) give the same reward, then every agent is rational at this point of view.
+**True**.
+```
+Assume we have a task environment in which all actions (including no action) give the same reward, then every agent is rational at this point of view.
+```
 
 </p>
 </details>
@@ -91,7 +100,10 @@ HW1 Problem 2 (T/F)
 <details><summary>answer</summary>
 <p>
 
-**False**. The input to an agent function is the percept history. However, the input to an agent program is only the current percept; it is up to the agent’s program to record any relevant history needed to make decisions.
+**False**.
+```
+The input to an agent function is the percept history. However, the input to an agent program is only the current percept; it is up to the agent’s program to record any relevant history needed to make decisions.
+```
 
 </p>
 </details>
@@ -114,7 +126,10 @@ An agent function is an abstract mathematical description while the agent progra
 <details><summary>answer</summary>
 <p>
 
-**True**. Again, like assertion c, considering an environment where all actions always give equal reward. In this case, the agent is still rational because it gets same reward for any sequence of actions.
+**True**.
+```
+Again, like assertion c, considering an environment where all actions always give equal reward. In this case, the agent is still rational because it gets same reward for any sequence of actions.
+```
 
 </p>
 </details>
@@ -124,7 +139,10 @@ An agent function is an abstract mathematical description while the agent progra
 <details><summary>answer</summary>
 <p>
 
-**True**. Consider two environments based on betting on the outcomes of tossing two coins. In environ- ment A, the coins are fair, in environment B, the coins are biased to always give heads. The agent can bet on what the sum of the heads appears in each toss, with equal reward on all possible outcomes for guessing correctly. The agent that always bets on 2 will be rational in both cases.
+**True**.
+```
+Consider two environments based on betting on the outcomes of tossing two coins. In environ- ment A, the coins are fair, in environment B, the coins are biased to always give heads. The agent can bet on what the sum of the heads appears in each toss, with equal reward on all possible outcomes for guessing correctly. The agent that always bets on 2 will be rational in both cases.
+```
 
 </p>
 </details>
@@ -134,7 +152,10 @@ An agent function is an abstract mathematical description while the agent progra
 <details><summary>answer</summary>
 <p>
 
-**False**. There is a simple case in which this can be proven false; the vacuum agent that cleans. If the agent moves but does not clean, it would not be rational.
+**False**.
+```
+There is a simple case in which this can be proven false; the vacuum agent that cleans. If the agent moves but does not clean, it would not be rational.
+```
 
 </p>
 </details>
@@ -144,7 +165,10 @@ An agent function is an abstract mathematical description while the agent progra
 <details><summary>answer</summary>
 <p>
 
-**False**. For example, let two perfectly playing agents play against each other. One of them must lose, otherwise it is not a poker game.
+**False**.
+```
+For example, let two perfectly playing agents play against each other. One of them must lose, otherwise it is not a poker game.
+```
 
 </p>
 </details>
@@ -239,10 +263,41 @@ None
 2. Domains
 3. Constraints
 
-
+### Possible Questions
+HW4 Problem 1
 
 ## 7. Logical Agents
 
+### CNF (Conjunctive normal form)
+~(A and B) = ~A or ~B
+~(A or B) = ~A and ~B
+A => B = A and B
+
+### Resolution
+To prove A->B, you need to show that A and ~B is empty clause or cannot be satisfied.
+
+### Possible Questions
+HW4 Problem 3 and 4
+
+
 ## 8. First-Order Logic
 
+### Possible Questions
+HW5 Problem 1
+
+
 ## 9. Inference in First-Order Logic
+
+### Unification
+
+Match variables between two expressions, from left to right.
+
+e.g.
+
+P(A, B), P(x, y) we have {x/A, y/B}
+
+P(A, Q(y)), P(x, y) we cannot unify y/Q(y)
+
+
+### Possible Questions
+HW5 Problem 2
