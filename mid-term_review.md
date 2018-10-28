@@ -58,7 +58,7 @@ HW1 Problem 2 (T/F)
 
 1. An agent that senses only partial information about the state cannot be perfectly rational.
 
-<details>answer
+<details><summary>answer</summary>
 <p>
 
 **False**. The vacuum-cleaning agent example from textbook at page 38 is rational but doesnt observe the state of the square that is adjacent to it. Thus, it is not true.
