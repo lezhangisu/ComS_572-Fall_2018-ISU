@@ -76,7 +76,7 @@ The vacuum-cleaning agent example from textbook at page 38 is rational but doesn
 
 **True**.
 ```
-Pure reflex agent will be rational in any task where memory of previous moves is required. For instance, a battleship game.
+Pure reflex agent will not be rational in any task where memory of previous moves is required. For instance, a battleship game.
 ```
 
 </p>
@@ -141,7 +141,7 @@ Again, like assertion c, considering an environment where all actions always giv
 
 **True**.
 ```
-Consider two environments based on betting on the outcomes of tossing two coins. In environ- ment A, the coins are fair, in environment B, the coins are biased to always give heads. The agent can bet on what the sum of the heads appears in each toss, with equal reward on all possible outcomes for guessing correctly. The agent that always bets on 2 will be rational in both cases.
+Consider two environments based on betting on the outcomes of tossing two coins. In environment A, the coins are fair, in environment B, the coins are biased to always give heads. The agent can bet on what the sum of the heads appears in each toss, with equal reward on all possible outcomes for guessing correctly. The agent that always bets on 2 will be rational in both cases.
 ```
 
 </p>
@@ -154,7 +154,7 @@ Consider two environments based on betting on the outcomes of tossing two coins.
 
 **False**.
 ```
-There is a simple case in which this can be proven false; the vacuum agent that cleans. If the agent moves but does not clean, it would not be rational.
+Built-in knowledge can give a rational agent in an unobservable environment. A vacuum-agent that cleans, moves, cleans moves would be rational, but one that never moves would not be.
 ```
 
 </p>
