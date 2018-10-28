@@ -101,7 +101,10 @@ HW1 Problem 2 (T/F)
 <details><summary>answer</summary>
 <p>
 
-**False**. An agent function is an abstract mathematical description while the agent program is a concrete implementation running within some physical system. Since the agent function is just an abstract description it is completely possible that there exists cases in which an agent program will fail due to memory limitation.
+**False**.
+```
+An agent function is an abstract mathematical description while the agent program is a concrete implementation running within some physical system. Since the agent function is just an abstract description it is completely possible that there exists cases in which an agent program will fail due to memory limitation.
+```
 
 </p>
 </details>
