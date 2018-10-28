@@ -270,7 +270,9 @@ HW4 Problem 1
 
 ### CNF (Conjunctive normal form)
 ~(A and B) = ~A or ~B
+
 ~(A or B) = ~A and ~B
+
 A => B = A and B
 
 ### Resolution
