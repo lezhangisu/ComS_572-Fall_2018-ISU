@@ -269,11 +269,15 @@ HW4 Problem 1
 ## 7. Logical Agents
 
 ### CNF (Conjunctive normal form)
+A<=>B  =  (A=>B)and(B=>A)
+A=>B   =  ~A or B
+
 ~(A and B) = ~A or ~B
 
 ~(A or B) = ~A and ~B
 
-A => B = A and B
+~(all x  p) = exists x  ~p
+~(exists x  p) = all x  ~p
 
 ### Resolution
 To prove A->B, you need to show that A and ~B is empty clause or cannot be satisfied.
