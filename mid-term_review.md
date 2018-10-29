@@ -270,6 +270,7 @@ HW4 Problem 1
 
 ### CNF (Conjunctive normal form)
 A<=>B  =  (A=>B)and(B=>A)
+
 A=>B   =  ~A or B
 
 ~(A and B) = ~A or ~B
@@ -277,6 +278,7 @@ A=>B   =  ~A or B
 ~(A or B) = ~A and ~B
 
 ~(all x  p) = exists x  ~p
+
 ~(exists x  p) = all x  ~p
 
 ### Resolution
